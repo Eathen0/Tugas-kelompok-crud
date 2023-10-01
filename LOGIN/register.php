@@ -30,8 +30,9 @@ if (isset($_POST['register'])) {
 
     // jika query simpan berhasil, maka user sudah terdaftar
     // maka alihkan ke halaman login
-    if ($saved)
+    if ($saved) {
         header("Location: login.php");
+    }
 }
 
 ?>
@@ -48,7 +49,16 @@ if (isset($_POST['register'])) {
 </head>
 
 <body>
-    <p>&larr; <a href="index.php">Home</a> | <a href="login.php">Login di sini</a>
+    
+    <nav>
+        <a href="index.php">
+            <img src="https://blonjo.kebumenkab.go.id/assets/images/logo.png" alt="" class="logo">
+        </a>
+        <div>
+            <a href="register.php" class="btn btn-secondary">Daftar</a>
+            <a href="login.php" class="btn btn-primary">Masuk</a>
+        </div>
+    </nav>
 
     <main class="container">
         <img class="logo" src="https://blonjo.kebumenkab.go.id/images/logos/f07391abe267823e8af5eb69cd26585c.png" alt="">
@@ -70,7 +80,8 @@ if (isset($_POST['register'])) {
             <div class="input-container">
                 <label for="fotoKtp">Foto KTP <span>*</span></label>
                 <div class="inp-ktp" id="input-foto-container">
-                    <input type="file"  accept="image/*" name="fotoKtp" id="input-foto" required />
+                    <!-- <img class="img-preview" src="./img/code.png" alt=""> -->
+                    <input type="file" accept="image/*" name="fotoKtp" id="input-foto" required />
                     <p id="file-name">Upload Foto</p>
                 </div>
             </div>
@@ -100,11 +111,14 @@ if (isset($_POST['register'])) {
             </div>
             <div class="input-container">
                 <label for="legalitas">Legalitas Market <span>*</span></label>
-                <textarea name="legalitas" id="legalitas" required></textarea>
+                <div>
+                    <textarea name="legalitas" id="legalitas" required></textarea>
+                    <span>* Di Isi legalitas Market Seperti SIUP, SKDP, TDP, dan lain-lain Bila Ada</span>
+                </div>
             </div>
             <div class="input-container">
                 <label for="kecamatan">Kecamatan <span>*</span></label>
-                <select  name="kecamatan" id="kecamatan" required>
+                <select name="kecamatan" id="kecamatan" required>
                     <option value="none" selected>-- Pilih Kecamatan</option>
                     <option value="AYAH">AYAH</option>
                     <option value="BUAYAN">BUAYAN</option>
@@ -135,7 +149,7 @@ if (isset($_POST['register'])) {
             </div>
             <div class="input-container">
                 <label for="kelurahan">Kelurahan <span>*</span></label>
-                <select  name="kelurahan" id="kelurahan" required>
+                <select name="kelurahan" id="kelurahan" required>
                     <option value="none" selected>-- Pilih kelurahan</option>
                     <option value="AYAH">AYAH</option>
                     <option value="BUAYAN">BUAYAN</option>
@@ -166,13 +180,16 @@ if (isset($_POST['register'])) {
             </div>
             <div class="input-container">
                 <label for="alamat">Alamat Lengkap <span>*</span></label>
-                <textarea name="alamat" id="alamat" required></textarea>
+                <div>
+                    <textarea name="alamat" id="alamat" required></textarea>
+                    <span>* Di Isi Nama Jalan, RT/RW, Dan Nomor Gedung Bila Ada</span>
+                </div>
             </div>
-            <input type="submit" name="register" value="Daftar" />
+            <input type="submit" name="register" value="Daftar" class="submit-btn" />
         </form>
     </main>
 
-    <script src="./js/register.js"></script>
+    <script src="./js/register-page.js"></script>
 </body>
 
 </html>

@@ -1,15 +1,15 @@
-<?php 
+<?php
 
 require_once("config.php");
 
-if(isset($_POST['login'])){
+if (isset($_POST['login'])) {
 
-    $username = filter_input(INPUT_POST, 'username', FILTER_SANITIZE_STRING);
-    $password = filter_input(INPUT_POST, 'password', FILTER_SANITIZE_STRING);
+    $username = filter_input(INPUT_POST, 'username', HTML_SPECIALCHARS);
+    $password = filter_input(INPUT_POST, 'password', HTML_SPECIALCHARS);
 
     $sql = "SELECT * FROM users WHERE username=:username OR email=:email";
     $stmt = $db->prepare($sql);
-    
+
     // bind parameter ke query
     $params = array(
         ":username" => $username,
@@ -21,9 +21,9 @@ if(isset($_POST['login'])){
     $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
     // jika user terdaftar
-    if($user){
+    if ($user) {
         // verifikasi password
-        if(password_verify($password, $user["password"])){
+        if (password_verify($password, $user["password"])) {
             // buat Session
             session_start();
             $_SESSION["user"] = $user;
@@ -37,40 +37,44 @@ if(isset($_POST['login'])){
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="./css/login-page.css">
     <title>Login</title>
-
-    
 </head>
+
 <body>
+    <nav>
+        <a href="index.php">
+            <img src="https://blonjo.kebumenkab.go.id/assets/images/logo.png" alt="" class="logo">
+        </a>
+        <div>
+            <a href="register.php" class="btn btn-secondary">Daftar</a>
+            <a href="login.php" class="btn btn-primary">Masuk</a>
+        </div>
+    </nav>
 
-
-
-        <p>&larr; <a href="index.php">Home</a> | <a href="register.php">Daftar</a>
-
-        <h4>Masuk</h4>
-        
-
-        <form action="" method="POST">
-
-            
-                <label for="username">Username</label>
-                <input type="text" name="username" placeholder="Username atau email" />
-            
-
-
-            
-                <label for="password">Password</label>
-                <input type="password" name="password" placeholder="Password" />
-
-
-            <input type="submit" name="login" value="Masuk" />
-
-        </form>
-            
-        
+    <main class="container">
+        <div class="box">
+            <img class="logo" src="https://blonjo.kebumenkab.go.id/images/logos/f07391abe267823e8af5eb69cd26585c.png" alt="">
+            <h3>Simbok Blonjo</h3>
+            <p>Silakan masuk untuk melanjutkan</p>
+            <form action="" method="POST">
+                <input type="text" name="username" placeholder="Nama Pengguna" />
+                <input type="password" name="password" placeholder="Kata Sandi" />
+                <div>
+                    <div>
+                        <input type="checkbox" name="remember" id="">
+                        <label for="remember">Ingat Saya</label>
+                    </div>
+                    <input class="btn btn-primary" type="submit" name="login" value="Masuk" />
+                </div>
+            </form>
+            <a href="index.php">Kembali ke home</a>
+        </div>
+    </main>
 </body>
 </html>

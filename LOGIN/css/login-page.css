@@ -1,0 +1,73 @@
+@import url('./global.css');
+
+.container {
+   width: 100%;
+   height: 100vh;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+
+   & .logo {
+      width: 4rem;
+      height: 4rem;
+      object-fit: cover;
+      margin-bottom: 0.5rem;
+   }
+   & p {
+      margin-bottom: 2rem;
+   }
+}
+
+.box {
+   padding: 1rem;
+   width: 20rem;
+   height: 20rem;
+   background: white;
+   border-radius: 0.5rem;
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+
+   & > a {
+      align-self: flex-start;
+      font-size: 75%;
+   }
+   & > h3 {
+      font-weight: 100;
+      margin-bottom: 0.5rem;
+   }
+   & > p {
+      font-size: 75%;
+   }
+}
+
+form {
+   
+   & > input {
+      margin-bottom: 1rem;
+   }
+   & > div {
+      display: flex;
+      gap: 5.5rem;
+      align-items: center;
+      
+      & > div {
+         display: flex;
+         align-items: center;
+         gap: 0.5rem;
+         height: 1rem;
+         width: 6.5rem;
+         
+         & label {
+            font-size: 80%;
+            width: 9rem;
+         }
+         & input {
+            width: 2rem;
+            height: 2rem;
+            padding: 0;
+            margin: 0;
+         }
+      }
+   }
+}
