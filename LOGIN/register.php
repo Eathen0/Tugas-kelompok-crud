@@ -44,16 +44,20 @@ if (isset($_POST['register'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="shortcut icon" href="./img/icon.png" type="image/x-icon">
     <link rel="stylesheet" href="./css/register-page.css">
-    <title>Daftar</title>
+    <title>Food Amanah - Daftar</title>
 </head>
 
 <body>
-    
+
     <nav>
-        <a href="index.php">
-            <img src="https://blonjo.kebumenkab.go.id/assets/images/logo.png" alt="" class="logo">
-        </a>
+        <div class="icon">
+            <a href="index.php">
+                <img src="./img/icon.png" alt="" class="logo">
+            </a>
+            <p>Food Amanah</p>
+        </div>
         <div>
             <a href="register.php" class="btn btn-secondary">Daftar</a>
             <a href="login.php" class="btn btn-primary">Masuk</a>
@@ -61,7 +65,7 @@ if (isset($_POST['register'])) {
     </nav>
 
     <main class="container">
-        <img class="logo" src="https://blonjo.kebumenkab.go.id/images/logos/f07391abe267823e8af5eb69cd26585c.png" alt="">
+        <img class="logo" src="./img/icon.png" alt="">
         <h2 class="judul-form">PENDAFTARAN</h2>
 
         <form action="" method="POST">
@@ -80,7 +84,7 @@ if (isset($_POST['register'])) {
             <div class="input-container">
                 <label for="fotoKtp">Foto KTP <span>*</span></label>
                 <div class="inp-ktp" id="input-foto-container">
-                    <!-- <img class="img-preview" src="./img/code.png" alt=""> -->
+                    <img class="img-preview" src="./img/code.png" alt="">
                     <input type="file" accept="image/*" name="fotoKtp" id="input-foto" required />
                     <p id="file-name">Upload Foto</p>
                 </div>
@@ -142,8 +146,8 @@ if (isset($_POST['register'])) {
                     <option value="SEMPOR">SEMPOR</option>
                     <option value="GOMBONG">GOMBONG</option>
                     <option value="KARANGANYAR">KARANGANYAR</option>
-                    <option value="KARANGAASEM">KARANGAASEM</option>
-                    <option value="SEDANG">SEDANG</option>
+                    <option value="KARANGASEM">KARANGASEM</option>
+                    <option value="SADANG">SADANG</option>
                     <option value="KARANGSAMBUNG">KARANGSAMBUNG</option>
                 </select>
             </div>
@@ -173,8 +177,8 @@ if (isset($_POST['register'])) {
                     <option value="SEMPOR">SEMPOR</option>
                     <option value="GOMBONG">GOMBONG</option>
                     <option value="KARANGANYAR">KARANGANYAR</option>
-                    <option value="KARANGAASEM">KARANGAASEM</option>
-                    <option value="SEDANG">SEDANG</option>
+                    <option value="KARANGASEM">KARANGASEM</option>
+                    <option value="SADANG">SADANG</option>
                     <option value="KARANGSAMBUNG">KARANGSAMBUNG</option>
                 </select>
             </div>
@@ -185,7 +189,7 @@ if (isset($_POST['register'])) {
                     <span>* Di Isi Nama Jalan, RT/RW, Dan Nomor Gedung Bila Ada</span>
                 </div>
             </div>
-            <input type="submit" name="register" value="Daftar" class="submit-btn" />
+            <input type="submit" name="register" value="Daftar" class="submit-btn btn-primary" />
         </form>
     </main>
 

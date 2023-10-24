@@ -35,12 +35,9 @@ form {
       grid-column: 1 / 3;
       color: white;
       border-radius: 0.3rem;
-      background: #65a1e2;
       border: none;
       cursor: pointer;
       transition: background 0.3s ease-in-out;
-   } & .submit-btn:hover {
-      background: #2c6baf;
    }
 }
 
@@ -66,38 +63,28 @@ form {
       text-align: center;
       line-height: 8rem;
       overflow: hidden;
-      transition: box-shadow 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-      
-      & p {
-         transform: scale(1);
-         transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-      }
-      & .img-exist {
 
+      & p {
+         user-select: none;
+      }
+      
+      & .img-exist {
+         display: block !important;
       } 
       & .img-preview {
+         z-index: 1;
+         display: none;
+         position: absolute;
          width: inherit;
          height: inherit;
          object-fit: cover;
+         opacity: 1;
+         transition: opacity .3s ease-in-out;
       }
-   } & .inp-ktp::after {
-      content: '';
-      position: absolute;
-      opacity: 0;
-      background: black;
-      transition: opacity 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-   } & .inp-ktp:hover .inp-ktp::after {
-      opacity: 0.5;
    }
    & input[type=file] {
       display: none;
       position: absolute;
-   }
-   & .inp-ktp:hover {
-      box-shadow: 0 0 3px 0.5px rgb(0, 183, 255);
-   }
-   & .inp-ktp:hover p {
-      transform: scale(1.3);
    }
    & select {
       width: 60%;
@@ -133,6 +120,34 @@ form {
       }
       & select {
          width: 100%;
+      }
+
+      & .inp-ktp {
+         transition: box-shadow 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      
+         & p {
+            transform: scale(1);
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+         }
+      } & .inp-ktp::after {
+         content: '';
+         position: absolute;
+         opacity: 0;
+         background: black;
+         transition: opacity 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      } & .inp-ktp:hover .inp-ktp::after {
+         opacity: 0.5;
+      }
+      & .inp-ktp:hover {
+         box-shadow: 0 0 3px 0.5px rgb(0, 183, 255);
+         
+         & p {
+            transform: scale(1.3);
+         }
+         
+         & .img-preview {
+            opacity: .1;
+         }
       }
    }
 }

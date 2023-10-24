@@ -48,9 +48,12 @@ if (isset($_POST['login'])) {
 
 <body>
     <nav>
-        <a href="index.php">
-            <img src="https://blonjo.kebumenkab.go.id/assets/images/logo.png" alt="" class="logo">
-        </a>
+        <div class="icon">
+            <a href="index.php">
+                <img src="./img/icon.png" alt="" class="logo">
+            </a>
+            <p>Food Amanah</p>
+        </div>
         <div>
             <a href="register.php" class="btn btn-secondary">Daftar</a>
             <a href="login.php" class="btn btn-primary">Masuk</a>
@@ -59,8 +62,9 @@ if (isset($_POST['login'])) {
 
     <main class="container">
         <div class="box">
-            <img class="logo" src="https://blonjo.kebumenkab.go.id/images/logos/f07391abe267823e8af5eb69cd26585c.png" alt="">
-            <h3>Simbok Blonjo</h3>
+            <img class="logo" src="./img/icon.png"
+                alt="">
+            <h3>Food Amanah</h3>
             <p>Silakan masuk untuk melanjutkan</p>
             <form action="" method="POST">
                 <input type="text" name="username" placeholder="Nama Pengguna" />
@@ -77,4 +81,5 @@ if (isset($_POST['login'])) {
         </div>
     </main>
 </body>
+
 </html>
