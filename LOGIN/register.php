@@ -2,6 +2,22 @@
 
 require_once("config.php");
 
+$sql = sprintf("
+INSERT INTO users (
+    %s ,%s ,%s ,%s ,%s ,%s ,%s ,%s ,%s ,%s ,%s ,%s, ,%s
+) 
+VALUES (
+    :%s, :%s, :%s, :%s, :%s, :%s, :%s, :%s, :%s, :%s, :%s, :%s, :%s
+)", $DATA[1], $DATA[2], $DATA[3], $DATA[4], $DATA[5], $DATA[6], $DATA[7], $DATA[8], $DATA[9], $DATA[10], $DATA[11], $DATA[12], $DATA[13]
+, $DATA[1], $DATA[2], $DATA[3], $DATA[4], $DATA[5], $DATA[6], $DATA[7], $DATA[8], $DATA[9], $DATA[10], $DATA[11], $DATA[12], $DATA[13]
+);
+
+echo $sql;
+
+// foreach ($db->query('SELECT * FROM users') as $item) {
+//     echo $item;
+// }
+
 if (isset($_POST['register'])) {
 
     // filter data yang diinputkan
@@ -13,8 +29,12 @@ if (isset($_POST['register'])) {
 
 
     // menyiapkan query
-    $sql = "INSERT INTO users (name, username, email, password) 
-            VALUES (:name, :username, :email, :password)";
+    $sql = sprintf("INSERT INTO users (
+                %s ,%s ,%s ,%s ,%s ,%s ,%s ,%s ,%s ,%s ,%s ,%s
+            ) 
+            VALUES (
+                :%s, :%s, :%s, :%s, :%s, :%s, :%s, :%s, :%s, :%s, :%s, :%s,
+            )", $DATA[0], $DATA[1], $DATA[2], $DATA[3], $DATA[4], $DATA[5], $DATA[6], $DATA[7], $DATA[8], $DATA[9], $DATA[10], $DATA[11]);
     $stmt = $db->prepare($sql);
 
     // bind parameter ke query
@@ -68,21 +88,21 @@ if (isset($_POST['register'])) {
         <img class="logo" src="./img/icon.png" alt="">
         <h2 class="judul-form">PENDAFTARAN</h2>
 
-        <form action="" method="POST">
+        <form action="register.php" method="POST">
             <div class="input-container">
-                <label for="namaMarket">Nama Market <span>*</span></label>
-                <input type="text" name="namaMarket" placeholder="Masukan Nama Market" required />
+                <label for="nama_market">Nama Market <span>*</span></label>
+                <input type="text" name="nama_market" placeholder="Masukan Nama Market" required />
             </div>
             <div class="input-container">
-                <label for="namaPemilik">Nama Pemilik <span>*</span></label>
-                <input type="text" name="namaPemilik" placeholder="Masukan nama lengkap" required />
+                <label for="nama_pemilik">Nama Pemilik <span>*</span></label>
+                <input type="text" name="nama_pemilik" placeholder="Masukan nama lengkap" required />
             </div>
             <div class="input-container">
                 <label for="nik">NIK/No. KTP <span>*</span></label>
                 <input type="text" name="nik" placeholder="Masukan NIK / No.KTP" required />
             </div>
             <div class="input-container">
-                <label for="fotoKtp">Foto KTP <span>*</span></label>
+                <label for="foto_ktp">Foto KTP <span>*</span></label>
                 <div class="inp-ktp" id="input-foto-container">
                     <img class="img-preview" src="./img/code.png" alt="">
                     <input type="file" accept="image/*" name="fotoKtp" id="input-foto" required />
@@ -102,21 +122,21 @@ if (isset($_POST['register'])) {
                 <input type="password" name="rePassword" placeholder="Masukan kembali password" required />
             </div>
             <div class="input-container">
-                <label for="noTelephone">No.Telepon/HP <span>*</span></label>
-                <input type="number" name="noTelephone" placeholder="Masukan No. Telepon" required />
+                <label for="telepon">No.Telepon/HP <span>*</span></label>
+                <input type="number" name="telepon" placeholder="Masukan No. Telepon" required />
             </div>
             <div class="input-container">
-                <label for="noWhastApp">No. WhatsApp <span>*</span></label>
-                <input type="text" name="noWhastApp" placeholder="Masukan kembali WhasApp" required />
+                <label for="no_wa">No. WhatsApp <span>*</span></label>
+                <input type="text" name="no_wa" placeholder="Masukan kembali WhasApp" required />
             </div>
             <div class="input-container">
                 <label for="email">Email <span>*</span></label>
                 <input type="email" name="email" placeholder="Masukan Email Aktif" required />
             </div>
             <div class="input-container">
-                <label for="legalitas">Legalitas Market <span>*</span></label>
+                <label for="legalitas_market">Legalitas Market <span>*</span></label>
                 <div>
-                    <textarea name="legalitas" id="legalitas" required></textarea>
+                    <textarea name="legalitas" id="legalitas_market" required></textarea>
                     <span>* Di Isi legalitas Market Seperti SIUP, SKDP, TDP, dan lain-lain Bila Ada</span>
                 </div>
             </div>
@@ -154,7 +174,6 @@ if (isset($_POST['register'])) {
             <div class="input-container">
                 <label for="kelurahan">Kelurahan <span>*</span></label>
                 <select name="kelurahan" id="kelurahan" required>
-                    <option value="none" selected>-- Pilih kelurahan</option>
                     <option value="AYAH">AYAH</option>
                     <option value="BUAYAN">BUAYAN</option>
                     <option value="PURING">PURING</option>
@@ -183,9 +202,9 @@ if (isset($_POST['register'])) {
                 </select>
             </div>
             <div class="input-container">
-                <label for="alamat">Alamat Lengkap <span>*</span></label>
+                <label for="alamat_lengkap">Alamat Lengkap <span>*</span></label>
                 <div>
-                    <textarea name="alamat" id="alamat" required></textarea>
+                    <textarea name="alamat_lengkap" id="alamat" required></textarea>
                     <span>* Di Isi Nama Jalan, RT/RW, Dan Nomor Gedung Bila Ada</span>
                 </div>
             </div>
