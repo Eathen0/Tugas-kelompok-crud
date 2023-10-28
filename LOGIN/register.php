@@ -1,63 +1,17 @@
 <?php
 require_once("config.php");
-$sql = sprintf("
-INSERT INTO users (
-    %s
-) 
-VALUES (
-    :%s
-)", $STR_DB_USERS_ATRIBUTES, $STR_DB_USERS_ATRIBUTES);
-
-
-
-// echo $sql;
-// echo var_dump(valueToSqlStr(["lkjljlk", "klkllk;", "ldkj"]));
-// foreach ($db->query('SELECT * FROM users') as $item) {
-//     echo $item;
-// }
-// if (isset($_POST['register'])) {
-
-//     // filter data yang diinputkan
-//     $name = filter_input(INPUT_POST, 'name', HTML_SPECIALCHARS);
-//     $username = filter_input(INPUT_POST, 'username', HTML_SPECIALCHARS);
-//     // enkripsi password
-//     $password = password_hash($_POST["password"], PASSWORD_DEFAULT);
-//     $email = filter_input(INPUT_POST, 'email', FILTER_VALIDATE_EMAIL);
-
-
-//     // menyiapkan query
-//     $sql = sprintf("INSERT INTO users (
-//                 %s ,%s ,%s ,%s ,%s ,%s ,%s ,%s ,%s ,%s ,%s ,%s
-//             ) 
-//             VALUES (
-//                 :%s, :%s, :%s, :%s, :%s, :%s, :%s, :%s, :%s, :%s, :%s, :%s,
-//             )", $DATA[0], $DATA[1], $DATA[2], $DATA[3], $DATA[4], $DATA[5], $DATA[6], $DATA[7], $DATA[8], $DATA[9], $DATA[10], $DATA[11]);
-//     $stmt = $db->prepare($sql);
-
-//     // bind parameter ke query
-//     $params = array(
-//         ":name" => $name,
-//         ":username" => $username,
-//         ":password" => $password,
-//         ":email" => $email
-//     );
-
-//     // eksekusi query untuk menyimpan ke database
-//     $saved = $stmt->execute($params);
-
-//     // jika query simpan berhasil, maka user sudah terdaftar
-//     // maka alihkan ke halaman login
-//     if ($saved) {
-//         header("Location: login.php");
-//     }
-// }
 
 if (isset($_POST['register'])) {
-    foreach(valueToSqlStr(array_splice(array_replace([], $USERS_ATRIBUTES), 1, sizeof($USERS_ATRIBUTES) - 2), $_FILES['foto_ktp']) as $key => $item) {
-        echo var_dump($item) . $USERS_ATRIBUTES[$key + 1] . '<br/>';
-        // echo $item . '<br/>';
-    };
-    // header('location: register.php');
+    $date = new DateTime();
+    $values = valueToSqlStr($FORM_USERS_ATRIBUTES, 'foto_ktp', 'user-photo-profile/');
+    if ($values['result']) {
+        if (mysqli_query($db, sprintf("INSERT INTO users (%s) VALUES (%s, '%d')", $STR_USERS_ATRIBUTES, $values['result'], 1))) {
+            header('location:login.php');
+        }
+
+    } else {
+        echo $values['error'];
+    }
 }
 
 ?>
@@ -93,40 +47,40 @@ if (isset($_POST['register'])) {
 
         <form action="register.php" method="POST" enctype="multipart/form-data">
             <div class="input-container">
-                <label for="nama_market">Nama Market <span>*</span></label>
-                <input type="text" name="nama_market" placeholder="Masukan Nama Market" required />
+                <label for="<?= $FORM_USERS_ATRIBUTES[0]; ?>">Nama Market <span>*</span></label>
+                <input type="text" name="<?= $FORM_USERS_ATRIBUTES[0]; ?>" placeholder="Masukan Nama Market" required />
             </div>
             <div class="input-container">
-                <label for="nama_pemilik">Nama Pemilik <span>*</span></label>
-                <input type="text" name="nama_pemilik" placeholder="Masukan nama lengkap" required />
+                <label for="<?= $FORM_USERS_ATRIBUTES[1]; ?>">Nama Pemilik <span>*</span></label>
+                <input type="text" name="<?= $FORM_USERS_ATRIBUTES[1]; ?>" placeholder="Masukan nama lengkap" required />
             </div>
             <div class="input-container">
-                <label for="nik">NIK/No. KTP <span>*</span></label>
-                <input type="text" name="nik" placeholder="Masukan NIK / No.KTP" required />
+                <label for="<?= $FORM_USERS_ATRIBUTES[2]; ?>">NIK/No. KTP <span>*</span></label>
+                <input type="number" name="<?= $FORM_USERS_ATRIBUTES[2]; ?>" placeholder="Masukan NIK / No.KTP" required />
             </div>
             <div class="input-container">
-                <label for="foto_ktp">Foto KTP <span>*</span></label>
+                <label for="<?= $FORM_USERS_ATRIBUTES[3]; ?>">Foto KTP <span>*</span></label>
                 <div class="inp-ktp" id="input-foto-container">
                     <img class="img-preview" src="./img/code.png" alt="">
-                    <input type="file" accept="image/*" name="foto_ktp" id="input-foto" required />
+                    <input type="file" accept="image/*" name="<?= $FORM_USERS_ATRIBUTES[3]; ?>" id="input-foto" required />
                     <p id="file-name">Upload Foto</p>
                 </div>
             </div>
             <div class="input-container">
-                <label for="username">Username <span>*</span></label>
-                <input type="text" name="username" placeholder="Digunakan untuk login" required />
+                <label for="<?= $FORM_USERS_ATRIBUTES[4]; ?>">Username <span>*</span></label>
+                <input type="text" name="<?= $FORM_USERS_ATRIBUTES[4]; ?>" placeholder="Digunakan untuk login" required />
             </div>
             <div class="input-container">
-                <label for="password">Password <span>*</span></label>
-                <input type="password" name="password" placeholder="Masukan password" required />
+                <label for="<?= $FORM_USERS_ATRIBUTES[5]; ?>">Password <span>*</span></label>
+                <input type="password" name="<?= $FORM_USERS_ATRIBUTES[5]; ?>" placeholder="Masukan password" required />
             </div>
             <div class="input-container">
                 <label for="rePassword">Repassword <span>*</span></label>
                 <input type="password" name="rePassword" placeholder="Masukan kembali password" required />
             </div>
             <div class="input-container">
-                <label for="telepon">No.Telepon/HP <span>*</span></label>
-                <input type="number" name="telepon" placeholder="Masukan No. Telepon" required />
+                <label for="<?= $FORM_USERS_ATRIBUTES[6]; ?>">No.Telepon/HP <span>*</span></label>
+                <input type="number" name="<?= $FORM_USERS_ATRIBUTES[6]; ?>" placeholder="Masukan No. Telepon" required />
             </div>
             <div class="input-container">
                 <label for="no_wa">No. WhatsApp <span>*</span></label>
