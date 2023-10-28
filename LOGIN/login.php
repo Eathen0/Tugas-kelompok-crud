@@ -47,23 +47,9 @@ if (isset($_POST['login'])) {
 </head>
 
 <body>
-    <nav>
-        <div class="icon">
-            <a href="index.php">
-                <img src="./img/icon.png" alt="" class="logo">
-            </a>
-            <p>Food Amanah</p>
-        </div>
-        <div>
-            <a href="register.php" class="btn btn-secondary">Daftar</a>
-            <a href="login.php" class="btn btn-primary">Masuk</a>
-        </div>
-    </nav>
-
     <main class="container">
         <div class="box">
-            <img class="logo" src="./img/icon.png"
-                alt="">
+            <img class="logo" src="./img/icon.png" alt="">
             <h3>Food Amanah</h3>
             <p>Silakan masuk untuk melanjutkan</p>
             <form action="" method="POST">
@@ -77,7 +63,10 @@ if (isset($_POST['login'])) {
                     <input class="btn btn-primary" type="submit" name="login" value="Masuk" />
                 </div>
             </form>
-            <a href="index.php">Kembali ke home</a>
+            <div>
+                <p>Belum punya akun?</p>
+                <a href="register.php">Daftar</a>
+            </div>
         </div>
     </main>
 </body>

@@ -16,27 +16,28 @@ $age = $resultData['age'];
 $email = $resultData['email'];
 ?>
 <html>
-<head>	
+
+<head>
 	<title>Edit Data</title>
 </head>
 
 <body>
-    <h2>Edit Data</h2>
-    <p>
-	    <a href="index.php">Home</a>
-    </p>
-	
+	<h2>Edit Data</h2>
+	<p>
+		<a href="index.php">Home</a>
+	</p>
+
 	<form name="edit" method="post" action="editAction.php">
 		<table border="0">
-			<tr> 
+			<tr>
 				<td>Name</td>
 				<td><input type="text" name="name" value="<?php echo $name; ?>"></td>
 			</tr>
-			<tr> 
+			<tr>
 				<td>Age</td>
 				<td><input type="text" name="age" value="<?php echo $age; ?>"></td>
 			</tr>
-			<tr> 
+			<tr>
 				<td>Email</td>
 				<td><input type="text" name="email" value="<?php echo $email; ?>"></td>
 			</tr>
@@ -47,4 +48,5 @@ $email = $resultData['email'];
 		</table>
 	</form>
 </body>
+
 </html>

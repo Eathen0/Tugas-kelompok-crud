@@ -15,6 +15,7 @@ inputFoto.onchange = function () {
          reader.onload = function (ev) {
             if (ev.type === "load") {
                imgPreview.src = reader.result;
+               inputFoto.value = imgInput;
             }
          }
       };

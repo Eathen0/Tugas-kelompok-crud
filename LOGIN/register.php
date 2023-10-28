@@ -1,58 +1,63 @@
 <?php
-
 require_once("config.php");
-
 $sql = sprintf("
 INSERT INTO users (
-    %s ,%s ,%s ,%s ,%s ,%s ,%s ,%s ,%s ,%s ,%s ,%s, ,%s
+    %s
 ) 
 VALUES (
-    :%s, :%s, :%s, :%s, :%s, :%s, :%s, :%s, :%s, :%s, :%s, :%s, :%s
-)", $DATA[1], $DATA[2], $DATA[3], $DATA[4], $DATA[5], $DATA[6], $DATA[7], $DATA[8], $DATA[9], $DATA[10], $DATA[11], $DATA[12], $DATA[13]
-, $DATA[1], $DATA[2], $DATA[3], $DATA[4], $DATA[5], $DATA[6], $DATA[7], $DATA[8], $DATA[9], $DATA[10], $DATA[11], $DATA[12], $DATA[13]
-);
+    :%s
+)", $STR_DB_USERS_ATRIBUTES, $STR_DB_USERS_ATRIBUTES);
 
-echo $sql;
 
+
+// echo $sql;
+// echo var_dump(valueToSqlStr(["lkjljlk", "klkllk;", "ldkj"]));
 // foreach ($db->query('SELECT * FROM users') as $item) {
 //     echo $item;
 // }
+// if (isset($_POST['register'])) {
+
+//     // filter data yang diinputkan
+//     $name = filter_input(INPUT_POST, 'name', HTML_SPECIALCHARS);
+//     $username = filter_input(INPUT_POST, 'username', HTML_SPECIALCHARS);
+//     // enkripsi password
+//     $password = password_hash($_POST["password"], PASSWORD_DEFAULT);
+//     $email = filter_input(INPUT_POST, 'email', FILTER_VALIDATE_EMAIL);
+
+
+//     // menyiapkan query
+//     $sql = sprintf("INSERT INTO users (
+//                 %s ,%s ,%s ,%s ,%s ,%s ,%s ,%s ,%s ,%s ,%s ,%s
+//             ) 
+//             VALUES (
+//                 :%s, :%s, :%s, :%s, :%s, :%s, :%s, :%s, :%s, :%s, :%s, :%s,
+//             )", $DATA[0], $DATA[1], $DATA[2], $DATA[3], $DATA[4], $DATA[5], $DATA[6], $DATA[7], $DATA[8], $DATA[9], $DATA[10], $DATA[11]);
+//     $stmt = $db->prepare($sql);
+
+//     // bind parameter ke query
+//     $params = array(
+//         ":name" => $name,
+//         ":username" => $username,
+//         ":password" => $password,
+//         ":email" => $email
+//     );
+
+//     // eksekusi query untuk menyimpan ke database
+//     $saved = $stmt->execute($params);
+
+//     // jika query simpan berhasil, maka user sudah terdaftar
+//     // maka alihkan ke halaman login
+//     if ($saved) {
+//         header("Location: login.php");
+//     }
+// }
 
 if (isset($_POST['register'])) {
-
-    // filter data yang diinputkan
-    $name = filter_input(INPUT_POST, 'name', HTML_SPECIALCHARS);
-    $username = filter_input(INPUT_POST, 'username', HTML_SPECIALCHARS);
-    // enkripsi password
-    $password = password_hash($_POST["password"], PASSWORD_DEFAULT);
-    $email = filter_input(INPUT_POST, 'email', FILTER_VALIDATE_EMAIL);
-
-
-    // menyiapkan query
-    $sql = sprintf("INSERT INTO users (
-                %s ,%s ,%s ,%s ,%s ,%s ,%s ,%s ,%s ,%s ,%s ,%s
-            ) 
-            VALUES (
-                :%s, :%s, :%s, :%s, :%s, :%s, :%s, :%s, :%s, :%s, :%s, :%s,
-            )", $DATA[0], $DATA[1], $DATA[2], $DATA[3], $DATA[4], $DATA[5], $DATA[6], $DATA[7], $DATA[8], $DATA[9], $DATA[10], $DATA[11]);
-    $stmt = $db->prepare($sql);
-
-    // bind parameter ke query
-    $params = array(
-        ":name" => $name,
-        ":username" => $username,
-        ":password" => $password,
-        ":email" => $email
-    );
-
-    // eksekusi query untuk menyimpan ke database
-    $saved = $stmt->execute($params);
-
-    // jika query simpan berhasil, maka user sudah terdaftar
-    // maka alihkan ke halaman login
-    if ($saved) {
-        header("Location: login.php");
-    }
+    foreach(valueToSqlStr(array_splice(array_replace([], $USERS_ATRIBUTES), 1, sizeof($USERS_ATRIBUTES) - 2), $_FILES['foto_ktp']) as $key => $item) {
+        echo var_dump($item) . $USERS_ATRIBUTES[$key + 1] . '<br/>';
+        // echo $item . '<br/>';
+    };
+    // header('location: register.php');
 }
 
 ?>
@@ -70,16 +75,14 @@ if (isset($_POST['register'])) {
 </head>
 
 <body>
-
     <nav>
         <div class="icon">
             <a href="index.php">
-                <img src="./img/icon.png" alt="" class="logo">
+                <img src="./img/icon.png" alt="" class="logo" draggable="false">
             </a>
             <p>Food Amanah</p>
         </div>
         <div>
-            <a href="register.php" class="btn btn-secondary">Daftar</a>
             <a href="login.php" class="btn btn-primary">Masuk</a>
         </div>
     </nav>
@@ -88,7 +91,7 @@ if (isset($_POST['register'])) {
         <img class="logo" src="./img/icon.png" alt="">
         <h2 class="judul-form">PENDAFTARAN</h2>
 
-        <form action="register.php" method="POST">
+        <form action="register.php" method="POST" enctype="multipart/form-data">
             <div class="input-container">
                 <label for="nama_market">Nama Market <span>*</span></label>
                 <input type="text" name="nama_market" placeholder="Masukan Nama Market" required />
@@ -105,7 +108,7 @@ if (isset($_POST['register'])) {
                 <label for="foto_ktp">Foto KTP <span>*</span></label>
                 <div class="inp-ktp" id="input-foto-container">
                     <img class="img-preview" src="./img/code.png" alt="">
-                    <input type="file" accept="image/*" name="fotoKtp" id="input-foto" required />
+                    <input type="file" accept="image/*" name="foto_ktp" id="input-foto" required />
                     <p id="file-name">Upload Foto</p>
                 </div>
             </div>
@@ -136,7 +139,7 @@ if (isset($_POST['register'])) {
             <div class="input-container">
                 <label for="legalitas_market">Legalitas Market <span>*</span></label>
                 <div>
-                    <textarea name="legalitas" id="legalitas_market" required></textarea>
+                    <textarea name="legalitas_market" id="legalitas" required></textarea>
                     <span>* Di Isi legalitas Market Seperti SIUP, SKDP, TDP, dan lain-lain Bila Ada</span>
                 </div>
             </div>

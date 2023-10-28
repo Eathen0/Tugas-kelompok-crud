@@ -1,10 +1,27 @@
 @import url('./global.css');
 
+/* * {
+   background: rgba(255, 0, 0, 0.1) !important;
+   border: solid red 1px !important;
+} */
+
 .container {
+   background: url('../img/geometric.svg'), linear-gradient(45deg, #ffa9f9, #fff7ad);
    width: 100%;
    height: 100vh;
    display: flex;
-   justify-content: center;
+   justify-content: end;
+   align-items: center;
+}
+
+.box {
+   padding: 2rem;
+   width: 25rem;
+   height: 100vh;
+   background: white;
+   border-radius: 0.5rem;
+   display: flex;
+   flex-direction: column;
    align-items: center;
 
    & .logo {
@@ -13,38 +30,39 @@
       object-fit: cover;
       margin-bottom: 0.5rem;
    }
-   & p {
-      margin-bottom: 2rem;
-   }
-}
-
-.box {
-   padding: 1rem;
-   width: 20rem;
-   height: 20rem;
-   background: white;
-   border-radius: 0.5rem;
-   display: flex;
-   flex-direction: column;
-   align-items: center;
-
-   & > a {
-      align-self: flex-start;
-      font-size: 75%;
-   }
    & > h3 {
-      font-weight: 100;
       margin-bottom: 0.5rem;
    }
    & > p {
+      margin-bottom: 2rem;
       font-size: 75%;
    }
+   & > div {
+      margin-right: auto;
+
+      & > p {
+         display: inline;
+         font-size: 75%;
+      }
+      & a {
+         align-self: flex-start;
+         text-decoration: underline;
+         font-size: 75%;
+      }
+   } 
 }
 
 form {
-   
+   height: 100%;
+   width: 100%;
+   display: flex;
+   flex-direction: column;
+
    & > input {
       margin-bottom: 1rem;
+   }
+   & > input:nth-child(2) {
+      margin-bottom: auto;
    }
    & > div {
       display: flex;
@@ -69,5 +87,12 @@ form {
             margin: 0;
          }
       }
+   }
+}
+
+@media only screen and (max-width: 600px) {
+   .box {
+      background: linear-gradient(45deg, rgba(255, 255, 255, 0.3), white);
+      width: 100%;
    }
 }
