@@ -1,21 +1,3 @@
-<?php
-require_once("config.php");
-
-if (isset($_POST['register'])) {
-    $date = new DateTime();
-    $values = valueToSqlStr($FORM_USERS_ATRIBUTES, 'foto_ktp', 'user-photo-profile/');
-    if ($values['result']) {
-        if (mysqli_query($db, sprintf("INSERT INTO users (%s) VALUES (%s, '%d')", $STR_USERS_ATRIBUTES, $values['result'], 1))) {
-            header('location:login.php');
-        }
-
-    } else {
-        echo $values['error'];
-    }
-}
-
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -45,6 +27,27 @@ if (isset($_POST['register'])) {
         <img class="logo" src="./img/icon.png" alt="">
         <h2 class="judul-form">PENDAFTARAN</h2>
 
+        <?php
+            require_once("config.php");
+
+            if (isset($_POST['register'])) {
+                $date = new DateTime();
+                $values = valueToSqlStr($FORM_USERS_ATRIBUTES, 'string', 'password', 'rePassword', 'foto_ktp', 'user-photo-profile/');
+                if ($values['result']) {
+                    try {
+                        mysqli_query($db, sprintf("INSERT INTO users (%s) VALUES (%s, '%d')", $STR_USERS_ATRIBUTES, $values['result'], 1));
+                        header('location:login.php');
+                    }
+                    catch (Exception $err) {
+                        if (file_exists($values['imgFileName'])) unlink($values['imgFileName']);
+                        echo errorPopupTamplate($err->getMessage());
+                    }
+                } else {
+                    echo errorPopupTamplate($values['error']);
+                }
+            }
+        ?>
+
         <form action="register.php" method="POST" enctype="multipart/form-data">
             <div class="input-container">
                 <label for="<?= $FORM_USERS_ATRIBUTES[0]; ?>">Nama Market <span>*</span></label>
@@ -56,12 +59,12 @@ if (isset($_POST['register'])) {
             </div>
             <div class="input-container">
                 <label for="<?= $FORM_USERS_ATRIBUTES[2]; ?>">NIK/No. KTP <span>*</span></label>
-                <input type="number" name="<?= $FORM_USERS_ATRIBUTES[2]; ?>" placeholder="Masukan NIK / No.KTP" required />
+                <input type="number" pattern="[1-9]{16}" name="<?= $FORM_USERS_ATRIBUTES[2]; ?>"  placeholder="Masukan NIK / No.KTP" required />
             </div>
             <div class="input-container">
                 <label for="<?= $FORM_USERS_ATRIBUTES[3]; ?>">Foto KTP <span>*</span></label>
                 <div class="inp-ktp" id="input-foto-container">
-                    <img class="img-preview" src="./img/code.png" alt="">
+                    <img class="img-preview" src="" alt="">
                     <input type="file" accept="image/*" name="<?= $FORM_USERS_ATRIBUTES[3]; ?>" id="input-foto" required />
                     <p id="file-name">Upload Foto</p>
                 </div>
@@ -83,23 +86,23 @@ if (isset($_POST['register'])) {
                 <input type="number" name="<?= $FORM_USERS_ATRIBUTES[6]; ?>" placeholder="Masukan No. Telepon" required />
             </div>
             <div class="input-container">
-                <label for="no_wa">No. WhatsApp <span>*</span></label>
-                <input type="text" name="no_wa" placeholder="Masukan kembali WhasApp" required />
+                <label for="<?= $FORM_USERS_ATRIBUTES[7]; ?>">No. WhatsApp <span>*</span></label>
+                <input type="text" name="<?= $FORM_USERS_ATRIBUTES[7]; ?>" placeholder="Masukan kembali WhasApp" required />
             </div>
             <div class="input-container">
-                <label for="email">Email <span>*</span></label>
-                <input type="email" name="email" placeholder="Masukan Email Aktif" required />
+                <label for="<?= $FORM_USERS_ATRIBUTES[8]; ?>">Email <span>*</span></label>
+                <input type="email" name="<?= $FORM_USERS_ATRIBUTES[8]; ?>" placeholder="Masukan Email Aktif" required />
             </div>
             <div class="input-container">
-                <label for="legalitas_market">Legalitas Market <span>*</span></label>
+                <label for="<?= $FORM_USERS_ATRIBUTES[9]; ?>">Legalitas Market <span>*</span></label>
                 <div>
-                    <textarea name="legalitas_market" id="legalitas" required></textarea>
+                    <textarea name="<?= $FORM_USERS_ATRIBUTES[9]; ?>" id="legalitas" required></textarea>
                     <span>* Di Isi legalitas Market Seperti SIUP, SKDP, TDP, dan lain-lain Bila Ada</span>
                 </div>
             </div>
             <div class="input-container">
-                <label for="kecamatan">Kecamatan <span>*</span></label>
-                <select name="kecamatan" id="kecamatan" required>
+                <label for="<?= $FORM_USERS_ATRIBUTES[10]; ?>">Kecamatan <span>*</span></label>
+                <select name="<?= $FORM_USERS_ATRIBUTES[10]; ?>" id="kecamatan" required>
                     <option value="none" selected>-- Pilih Kecamatan</option>
                     <option value="AYAH">AYAH</option>
                     <option value="BUAYAN">BUAYAN</option>
@@ -129,8 +132,8 @@ if (isset($_POST['register'])) {
                 </select>
             </div>
             <div class="input-container">
-                <label for="kelurahan">Kelurahan <span>*</span></label>
-                <select name="kelurahan" id="kelurahan" required>
+                <label for="<?= $FORM_USERS_ATRIBUTES[11]; ?>">Kelurahan <span>*</span></label>
+                <select name="<?= $FORM_USERS_ATRIBUTES[11]; ?>" id="kelurahan" required>
                     <option value="AYAH">AYAH</option>
                     <option value="BUAYAN">BUAYAN</option>
                     <option value="PURING">PURING</option>
@@ -159,16 +162,26 @@ if (isset($_POST['register'])) {
                 </select>
             </div>
             <div class="input-container">
-                <label for="alamat_lengkap">Alamat Lengkap <span>*</span></label>
+                <label for="<?= $FORM_USERS_ATRIBUTES[12]; ?>">Alamat Lengkap <span>*</span></label>
                 <div>
-                    <textarea name="alamat_lengkap" id="alamat" required></textarea>
+                    <textarea name="<?= $FORM_USERS_ATRIBUTES[12]; ?>" id="alamat" required></textarea>
                     <span>* Di Isi Nama Jalan, RT/RW, Dan Nomor Gedung Bila Ada</span>
                 </div>
             </div>
-            <input type="submit" name="register" value="Daftar" class="submit-btn btn-primary" />
+
+            <p><i>Sudah punya akun ?</i></p>
+            <div class="btn-container">
+                <a href="login.php" class="btn login-btn">Masuk</a>
+                <input type="submit" name="register" value="Daftar" class="submit-btn btn-primary" />
+            </div>
         </form>
     </main>
 
+    <footer>
+
+    </footer>
+
+    <script src="./js/global.js"></script>
     <script src="./js/register-page.js"></script>
 </body>
 

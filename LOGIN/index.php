@@ -26,8 +26,12 @@
             <div class="image-slide-container">
                 <img src="./img/img-slide-1.png" alt="" draggable="false">
                 <img src="./img/img-slide-2.jpg" alt="" draggable="false">
+                <img src="./img/img-slide-1.png" alt="" draggable="false">
+                <img src="./img/img-slide-2.jpg" alt="" draggable="false">
+                <img src="./img/img-slide-1.png" alt="" draggable="false">
+                <img src="./img/img-slide-2.jpg" alt="" draggable="false">
             </div>
-            <button>next</button>
+            <button style="padding: 1rem; translate: x 100%;">next</button>
         </main>
         <h1>Selamat datang di Food Amanah</h1>
         <p>Klik dibawah ini untuk melanjutkan</p>

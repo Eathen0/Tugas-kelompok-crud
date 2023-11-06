@@ -1,40 +1,3 @@
-<?php
-
-require_once("config.php");
-
-if (isset($_POST['login'])) {
-
-    $username = filter_input(INPUT_POST, 'username', HTML_SPECIALCHARS);
-    $password = filter_input(INPUT_POST, 'password', HTML_SPECIALCHARS);
-
-    $sql = "SELECT * FROM users WHERE username=:username OR email=:email";
-    $stmt = $db->prepare($sql);
-
-    // bind parameter ke query
-    $params = array(
-        ":username" => $username,
-        ":email" => $username
-    );
-
-    $stmt->execute($params);
-
-    $user = $stmt->fetch(PDO::FETCH_ASSOC);
-
-    // jika user terdaftar
-    if ($user) {
-        // verifikasi password
-        if (password_verify($password, $user["password"])) {
-            // buat Session
-            session_start();
-            $_SESSION["user"] = $user;
-            // login sukses, alihkan ke halaman timeline
-            header("Location: timeline.php");
-        }
-    }
-}
-?>
-
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -43,17 +6,19 @@ if (isset($_POST['login'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="./css/login-page.css">
+    <script src="./js/global.js" defer></script>
     <title>Login</title>
 </head>
 
 <body>
+
     <main class="container">
         <div class="box">
             <img class="logo" src="./img/icon.png" alt="">
             <h3>Food Amanah</h3>
             <p>Silakan masuk untuk melanjutkan</p>
-            <form action="" method="POST">
-                <input type="text" name="username" placeholder="Nama Pengguna" />
+            <form action="login.php" method="POST">
+                <input type="text" name="username" placeholder="username" />
                 <input type="password" name="password" placeholder="Kata Sandi" />
                 <div>
                     <div>
@@ -69,6 +34,34 @@ if (isset($_POST['login'])) {
             </div>
         </div>
     </main>
-</body>
 
+    <?php
+
+    require_once("config.php");
+
+    if (isset($_POST['login'])) {
+
+        $values = valueToSqlStr(['username', 'password'], 'array')['result'];
+        $sql = sprintf("SELECT * FROM `users` WHERE username='%s'", $values[0]);
+        
+        $query = mysqli_fetch_array(mysqli_query($db, $sql));
+
+        if (is_array($query)) {
+            
+            $data = array_values(array_unique($query));
+            if (password_verify($values[1], $data[6])) {
+                session_start();
+                $_SESSION['user-data'] = $data;
+                header('location:timeline.php');
+            } else {
+                echo errorPopupTamplate('password salah');
+            }
+        
+        } else {
+            echo errorPopupTamplate('password atau username salah');
+        }
+    }
+
+    ?>
+</body>
 </html>
